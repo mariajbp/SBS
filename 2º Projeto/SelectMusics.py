@@ -14,23 +14,30 @@ centroids = pd.read_csv("Data/centroids.csv", sep = ",",
 songsClusters = pd.read_csv("Data/Songs_clusters.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 
-print(songsClusters.head())
+#print(songsClusters.head())
 
 first = songsNormalized.iloc[0]
 
 def suggestSongs(name, artist):
     
-    song = songsNormalized[(songsNormalized['name'] == name) &
-                           (songsNormalized['name'] == artist)]
+    song = songsNormalized.copy()
+    song = song[(song['name'] == name) & 
+                (song['artists'] == artist)]
     
+    print(song)
     dif = pd.DataFrame()
     
-    dif = (pow(song-centroids, 2)).drop(columns = ['artists', 'name'])
+    song = song.drop(columns = ['artists', 'name'])
+    print(song)
+    print(centroids)
+    
+    for i in range(len(centroids)):
+        dif = dif.append(song, ignore_index = True)
+        
+    dif = (pow((centroids - dif), 2))
     dif = dif.sum(axis = 1)
     dif = dif.apply(np.sqrt)
-    
-    print(dif)
-    
+        
     min = dif[0]
     cluster = 0
     
@@ -46,8 +53,10 @@ def suggestSongs(name, artist):
     songsSugested = songsSugested[(songsSugested['artists'] != first['artists']) & 
                                   (songsSugested['name'] != first['name'])]
     
-    print(songsSugested[['artists', 'name']].head(4))
+    print(songsSugested[['artists', 'name']].head(8))
 
 
 
 suggestSongs(first['name'], first['artists'])
+
+suggestSongs('Black', 'Pearl Jam')
