@@ -57,6 +57,9 @@ def suggestSongs(name, artist):
     songsSugested = songsSugested[(songsSugested['artists'] != first['artists']) & 
                                   (songsSugested['name'] != first['name'])]
     
+    songsSugested = songsSugested.drop_duplicates(subset = 'artists', keep = 'first')
+    print(songsSugested[['artists', 'name']].head(8))
+    
     return songsSugested[['artists', 'name']].head(8).to_json(orient = 'split')
 
 
@@ -95,7 +98,10 @@ def suggestSongsByGenre(name):
     
     songsSugested = songsClusters[songsClusters['Cluster'] == ('cluster_' + str(cluster))]
     
-    return songsSugested[['artists', 'name']].head(8)..to_json(orient = 'split')
+    songsSugested = songsSugested.drop_duplicates(subset = 'artists', keep = 'first')
+    print(songsSugested[['artists', 'name']].head(8))
+    
+    return songsSugested[['artists', 'name']].head(8).to_json(orient = 'split')
 
 
 def nearestSongs(name, artist):
@@ -169,6 +175,9 @@ def nearestSongs(name, artist):
     for i in range(len(listSongs)):
         songs = songs.append(songsSugested.iloc[listSongs[i]])
         
+    songs = songs.drop_duplicates(subset = 'artists', keep = 'first')
+    print(songs[['artists', 'name']].head(8))
+    
     return songs[['artists', 'name']].head(8).to_json(orient = 'split')
 
 #suggestSongs(first['name'], first['artists'])
@@ -176,11 +185,10 @@ def nearestSongs(name, artist):
 #suggestSongs('Toxic', 'Britney Spears')
 #suggestSongs("Black", 'Pearl Jam')
 
-
 #suggestSongsByGenre('Rock')
 
 #suggestSongsByGenre('Pop')
 
-#nearestSongs('Stressed Out', 'Twenty One Pilots')
+nearestSongs('Stressed Out', 'Twenty One Pilots')
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-nearestSongs("Black", 'Pearl Jam')
+#nearestSongs("Black", 'Pearl Jam')
