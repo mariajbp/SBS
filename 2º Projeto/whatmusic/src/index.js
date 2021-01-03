@@ -10,12 +10,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <BrowserRouter>
-       <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/genre" component={Genre} />
-        <Route path="/music" component={Music} />
-      </Switch>
-      </BrowserRouter>,
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/genre" component={Genre} />
+      <Route path="/music" component={Music} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
