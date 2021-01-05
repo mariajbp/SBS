@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './App.css';
+import './Genre.css';
 import axios from 'axios';
+import { Button } from "reactstrap";
 import Footer from "./components/Footer";
 
 
@@ -22,7 +23,7 @@ function Genre() {
       <header className="Genre-header">
 
         <div className="btn-group">
-          <button onClick={e => handleClick("Blues")} type="button" className="btn btn-danger "> Blues </button>
+          <button onClick={e => handleClick("Blues")} type="button" className="btn btn-danger"> Blues </button> 
           <button onClick={e => handleClick("Classical")} type="button" className="btn btn-danger "> Classical </button>
           <button onClick={e => handleClick("Country")} type="button" className="btn btn-danger "> Country </button>
           <button onClick={e => handleClick("Eletronic/Dance")} type="button" className="btn btn-danger "> Eletronic/Dance </button>
@@ -36,13 +37,16 @@ function Genre() {
           <button onClick={e => handleClick("Soul")} type="button" className="btn btn-danger "> Soul </button>
           <button onClick={e => handleClick("Other")} type="button" className="btn btn-danger "> Other </button>
         </div>
+      
 
+      <div className="Music-List">
+      <ol>
+          {musicas.map((m) => 
+            <li> {m[0]} - {m[1]}  </li> 
+          )}
+        </ol>
+      </div>
       </header>
-      <ul>
-        {musicas.map((m) => 
-          <li>{m[0]} - {m[1]}</li>
-        )}
-      </ul>
 
       <Footer />
     </div>

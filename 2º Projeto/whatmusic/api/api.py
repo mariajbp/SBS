@@ -21,14 +21,15 @@ def getSuggestedSongsByGenre():
     print(l)
     return {'list': l}
 
-## working post
-@app.route('/genrebuttonpost', methods = ['POST'])
-def workingpost():
-    data =  request.get_json()
-    g = data.get('genre', '')
-    print(g)
-    l = suggestSongsByGenre(g)
-    print(l)
+############ Music API ############
+
+@app.route('/getArtists')
+def getArtist():
+    l = ['m','mar','maria', 'cris']
     return {'list': l}
 
-############ Music API ############
+@app.route('/getSongsByArtist', methods = ['GET', 'POST'])
+def getSongsArtist():
+    a = request.args.get('artist', None)
+    l = ['Song1', 'Song2']
+    return {'list': l}

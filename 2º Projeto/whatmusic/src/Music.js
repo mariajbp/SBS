@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import {Link } from "react-router-dom";
 import Footer from "./components/Footer";
-import './App.css';
+import Autocomplete from "./components/Autocomplete";
+import ComboBox from "./components/Auto";
+import './Music.css';
 
 function Music() {
 
- 
 
   return (
     <div className="Music">
-         <header className="Music-header">
+      <header className="Music-header">
 
-         </header>
-      <Footer/>
+      <ComboBox/>
+
+      </header>
+      <Footer />
     </div>
   );
-
-
 }
+
 export default Music;
