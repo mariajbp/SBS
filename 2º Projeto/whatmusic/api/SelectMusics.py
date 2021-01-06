@@ -16,7 +16,7 @@ genres = pd.read_csv("Data/genres.csv", sep = ",",
 
 first = songsNormalized.iloc[0]
 
-def suggestSongs(name, artist):
+def suggestSongs(name, artist, numberSongs):
     
     song = songsNormalized.copy()
     song = song[(song['name'] == name) & 
@@ -58,12 +58,14 @@ def suggestSongs(name, artist):
                                   (songsSugested['name'] != first['name'])]
     
     songsSugested = songsSugested.drop_duplicates(subset = 'artists', keep = 'first')
-    print(songsSugested[['artists', 'name']].head(8))
+    print(songsSugested[['artists', 'name']].head(numberSongs))
     
-    return songsSugested[['artists', 'name']].head(8).to_json(orient = 'split')
+    
+    # Meter inteiro para sabermos se e pretendido haver artistas repetidos ou nao
+    return songsSugested[['artists', 'name']].head(numberSongs).to_json(orient = 'split')
 
 
-def suggestSongsByGenre(name):
+def suggestSongsByGenre(name, numberSongs):
     
     genre = genres[genres['genres'] == name]
     
@@ -99,12 +101,12 @@ def suggestSongsByGenre(name):
     songsSugested = songsClusters[songsClusters['Cluster'] == ('cluster_' + str(cluster))]
     
     songsSugested = songsSugested.drop_duplicates(subset = 'artists', keep = 'first')
-    print(songsSugested[['artists', 'name']].head(8))
+    print(songsSugested[['artists', 'name']].head(numberSongs))
     
-    return songsSugested[['artists', 'name']].head(8).to_json(orient = 'split')
+    return songsSugested[['artists', 'name']].head(numberSongs).to_json(orient = 'split')
 
 
-def nearestSongs(name, artist):
+def nearestSongs(name, artist, numberSongs):
     
     song = songsNormalized.copy()
     songWithName = song.copy()
@@ -176,9 +178,32 @@ def nearestSongs(name, artist):
         songs = songs.append(songsSugested.iloc[listSongs[i]])
         
     songs = songs.drop_duplicates(subset = 'artists', keep = 'first')
-    print(songs[['artists', 'name']].head(8))
+    print(songs[['artists', 'name']].head(numberSongs))
     
-    return songs[['artists', 'name']].head(8).to_json(orient = 'split')
+    return songs[['artists', 'name']].head(numberSongs).to_json(orient = 'split')
+
+
+def getArtists():
+    
+    artists = songsNormalized.copy()
+    artists = artists.drop_duplicates(subset = 'artists', keep = 'first')
+    
+    artists = artists['artists']
+    
+    print(list(artists))
+    
+    return list(artists) 
+
+
+def getSongsByArtist(artist):
+    
+    songs = songsNormalized.copy()    
+    songs = songs[songs['artists'] == artist]
+    
+    print(list(songs['name']))
+    
+    return list(songs)
+
 
 #suggestSongs(first['name'], first['artists'])
 
@@ -191,4 +216,6 @@ def nearestSongs(name, artist):
 
 #nearestSongs('Stressed Out', 'Twenty One Pilots')
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-nearestSongs("Black", 'Pearl Jam')
+#nearestSongs("Gucci Gang", 'Lil Pump')
+
+getSongsByArtist('Pearl Jam')
