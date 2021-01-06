@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import './Genre.css';
 import axios from 'axios';
-import { Button } from "reactstrap";
 import Footer from "./components/Footer";
 
 
 
 function Genre() {
   const [musicas, setMusicas] = useState([])
-
   const handleClick = async function handleClick(e) {
     const params = { genre: e }
     await axios.get('http://localhost:5000/genrebuttons', { params })
