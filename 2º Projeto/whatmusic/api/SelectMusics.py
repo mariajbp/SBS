@@ -4,7 +4,6 @@
 
 import pandas as pd
 import numpy as np
-import json
 
 songsNormalized = pd.read_csv("Data/Songs_normalized.csv", sep = ",",
                               engine = 'python', encoding = 'utf8')
@@ -14,7 +13,6 @@ songsClusters = pd.read_csv("Data/Songs_clusters.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
-
 
 first = songsNormalized.iloc[0]
 
@@ -191,6 +189,6 @@ def nearestSongs(name, artist):
 
 #suggestSongsByGenre('Pop')
 
-nearestSongs('Stressed Out', 'Twenty One Pilots')
+#nearestSongs('Stressed Out', 'Twenty One Pilots')
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-#nearestSongs("Black", 'Pearl Jam')
+nearestSongs("Black", 'Pearl Jam')
