@@ -12,3 +12,30 @@
     font-size: calc(10px + 2vmin);
     color: #ed6464;
   }
+
+.AutoCompleteBoxes {
+  display: flex;
+
+}
+
+.Music-List{
+  font-size: 15px;
+  text-align: left;
+  align-items: center;
+
+}
+
+ol {
+	list-style-type: none;
+	counter-reset: li;
+}
+li {
+	font-size: 15px;
+}
+
+li:before {
+  counter-increment: li;
+  content: counter(li, decimal-leading-zero);
+	color: rgb(43, 43, 43);
+	margin-right: 0.25em;
+}
