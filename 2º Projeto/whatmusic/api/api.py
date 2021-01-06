@@ -39,6 +39,7 @@ def getSongsArtist():
 
 @app.route('/getSuggestedSongs', methods = ['GET', 'POST'])
 def getSuggestedSongs():
+    #usar a nearest
     a = request.args.get('artist', None)
     s = request.args.get('song', None)
     l = ['funciona crl', 'yesss']
