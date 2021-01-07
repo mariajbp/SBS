@@ -19,10 +19,9 @@ function Genre() {
   return (
     <div className="Genre">
       <header className="Genre-header">
-
+      <div className="HeaderText"> Indica-nos uma género que gostes e sugerimos-te o que ouvir   </div>
         <div className="btn-group">
           <button onClick={e => handleClick("Blues")} type="button" className="btn btn-danger"> Blues </button> 
-          <button onClick={e => handleClick("Classical")} type="button" className="btn btn-danger "> Classical </button>
           <button onClick={e => handleClick("Country")} type="button" className="btn btn-danger "> Country </button>
           <button onClick={e => handleClick("Eletronic/Dance")} type="button" className="btn btn-danger "> Eletronic/Dance </button>
           <button onClick={e => handleClick("Indie")} type="button" className="btn btn-danger "> Indie </button>

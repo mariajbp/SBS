@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 .Music {
     text-align: center;
   }
@@ -38,4 +41,9 @@ li:before {
   content: counter(li, decimal-leading-zero);
 	color: rgb(43, 43, 43);
 	margin-right: 0.25em;
+}
+
+.HeaderText{
+  font-family: lobster;
+  font-size: 25px;
 }

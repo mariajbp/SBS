@@ -22,7 +22,7 @@ def suggestSongs(name, artist, numberSongs):
     song = song[(song['name'] == name) & 
                 (song['artists'] == artist)]
     
-    print(song)
+    #print(song)
     if song.empty:
         print('Song not available... try again')
         return
@@ -32,8 +32,8 @@ def suggestSongs(name, artist, numberSongs):
     dif = pd.DataFrame()
     
     song = song.drop(columns = ['artists', 'name'])
-    print(song)
-    print(centroids)
+    #print(song)
+    #print(centroids)
     
     for i in range(len(centroids)):
         dif = dif.append(song, ignore_index = True)
@@ -50,7 +50,7 @@ def suggestSongs(name, artist, numberSongs):
             min = dif[i]
             cluster = i
     
-    print("Min: ", min, " and cluster: ", cluster)
+    #print("Min: ", min, " and cluster: ", cluster)
     
     
     songsSugested = songsClusters[songsClusters['Cluster'] == ('cluster_' + str(cluster))]
@@ -58,7 +58,7 @@ def suggestSongs(name, artist, numberSongs):
                                   (songsSugested['name'] != first['name'])]
     
     songsSugested = songsSugested.drop_duplicates(subset = 'artists', keep = 'first')
-    print(songsSugested[['artists', 'name']].head(numberSongs))
+    #print(songsSugested[['artists', 'name']].head(numberSongs))
     
     
     # Meter inteiro para sabermos se e pretendido haver artistas repetidos ou nao
@@ -69,7 +69,7 @@ def suggestSongsByGenre(name, numberSongs):
     
     genre = genres[genres['genres'] == name]
     
-    print(genre)
+    #print(genre)
     
     if genre.empty:
         print('Something went wrong :(')
@@ -78,7 +78,7 @@ def suggestSongsByGenre(name, numberSongs):
     dif = pd.DataFrame()
     
     genre = genre.drop(columns = 'genres')
-    print(centroids)
+    #print(centroids)
     
     for i in range(len(centroids)):
         dif = dif.append(genre, ignore_index = True)
@@ -95,7 +95,7 @@ def suggestSongsByGenre(name, numberSongs):
             min = dif[i]
             cluster = i
     
-    print("Min: ", min, " and cluster: ", cluster)
+    #print("Min: ", min, " and cluster: ", cluster)
     
     
     songsSugested = songsClusters[songsClusters['Cluster'] == ('cluster_' + str(cluster))]
@@ -108,6 +108,7 @@ def suggestSongsByGenre(name, numberSongs):
 
 def nearestSongs(name, artist, numberSongs):
     
+    print(name)
     song = songsNormalized.copy()
     songWithName = song.copy()
     song = song[(song['name'] == name) & 
@@ -138,7 +139,7 @@ def nearestSongs(name, artist, numberSongs):
             min = dif[i]
             cluster = i
     
-    print('cluster: ', cluster)
+    #('cluster: ', cluster)
         
     songsSugested = songsClusters.copy()
     songsSugested = songsSugested[songsSugested['Cluster'] == ('cluster_' + str(cluster))]
@@ -178,9 +179,9 @@ def nearestSongs(name, artist, numberSongs):
         songs = songs.append(songsSugested.iloc[listSongs[i]])
         
     songs = songs.drop_duplicates(subset = 'artists', keep = 'first')
-    print(songs[['artists', 'name']].head(numberSongs))
+    #print(songs[['artists', 'name']].head(numberSongs))
     
-    return songs[['artists', 'name']].head(numberSongs).to_json(orient = 'split')
+    return songs[['artists', 'name']].head(int(numberSongs)).to_json(orient = 'split')
 
 
 def getArtists():
@@ -190,7 +191,7 @@ def getArtists():
     
     artists = artists['artists']
     
-    print(list(artists))
+    #print(list(artists))
     
     return list(artists) 
 
@@ -200,9 +201,9 @@ def getSongsByArtist(artist):
     songs = songsNormalized.copy()    
     songs = songs[songs['artists'] == artist]
     
-    print(list(songs['name']))
+    #print(list(songs['name']))
     
-    return list(songs)
+    return list(songs['name'])
 
 
 #suggestSongs(first['name'], first['artists'])
@@ -214,7 +215,7 @@ def getSongsByArtist(artist):
 
 #suggestSongsByGenre('Pop')
 
-#nearestSongs('Stressed Out', 'Twenty One Pilots')
+#print(nearestSongs('Stressed Out', 'Twenty One Pilots', 10))
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
 #nearestSongs("Gucci Gang", 'Lil Pump')
 

@@ -19,7 +19,7 @@ function App() {
             <Link to="/music"><button type="button" className="btn btn-danger btn-lg">Pesquisar por música</button> </Link> 
           </div>
 
-        <p>The current time is {currentTime}.</p>
+        
       </header>
       <Footer/>
     </div>
