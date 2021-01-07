@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Footer from "./components/Footer";
+import CustomizedRatings from "./components/Rate";
 import axios from 'axios';
+import { ReactComponent as Logo } from './logo.svg';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import './Music.css';
+import './Css/Music.css';
+
 
 function Music() {
-
   var n = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
   const [artist, setArtists] = useState(0);
@@ -48,7 +50,8 @@ function Music() {
   return (
     <div className="Music">
       <header className="Music-header">
-      <div className="HeaderText"> Indica-nos uma música que gostes e sugerimos-te o que ouvir  <br></br> </div>
+        <Logo className="Logo" />
+        <div className="HeaderText"> <p> Indica-nos uma música que gostes e sugerimos-te o que ouvir </p> </div>
         <div className="AutoCompleteBoxes">
           <Autocomplete
             id="combo-box-demo"
@@ -83,7 +86,7 @@ function Music() {
             )}
           </ol>
         </div>
-
+        {<CustomizedRatings />}
       </header>
       <Footer />
     </div>

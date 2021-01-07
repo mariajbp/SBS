@@ -14,7 +14,7 @@ songsClusters = pd.read_csv("Data/Songs_clusters.csv", sep = ",",
 genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 
-first = songsNormalized.iloc[0]
+#first = songsNormalized.iloc[0]
 
 def suggestSongs(name, artist, numberSongs):
     
@@ -143,8 +143,7 @@ def nearestSongs(name, artist, numberSongs):
         
     songsSugested = songsClusters.copy()
     songsSugested = songsSugested[songsSugested['Cluster'] == ('cluster_' + str(cluster))]
-    songsSugested = songsSugested[(songsSugested['artists'] != first['artists']) & 
-                                  (songsSugested['name'] != first['name'])]
+    #songsSugested = songsSugested[(songsSugested['artists'] != first['artists']) & (songsSugested['name'] != first['name'])]
     
     songsSugested = songsSugested.drop(columns = 'Cluster')
     

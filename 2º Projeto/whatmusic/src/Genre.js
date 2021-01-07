@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import './Genre.css';
+import './Css/Genre.css';
 import axios from 'axios';
+import CustomizedRatings from "./components/Rate";
+import { ReactComponent as Logo } from './logo.svg';
 import Footer from "./components/Footer";
 
 
@@ -19,7 +21,8 @@ function Genre() {
   return (
     <div className="Genre">
       <header className="Genre-header">
-      <div className="HeaderText"> Indica-nos uma género que gostes e sugerimos-te o que ouvir   </div>
+      <Logo className="Logo" />
+      <div className="HeaderText"> <p>Indica-nos uma género que gostes e sugerimos-te o que ouvir </p>   </div>
         <div className="btn-group">
           <button onClick={e => handleClick("Blues")} type="button" className="btn btn-danger"> Blues </button> 
           <button onClick={e => handleClick("Country")} type="button" className="btn btn-danger "> Country </button>
@@ -34,15 +37,16 @@ function Genre() {
           <button onClick={e => handleClick("Soul")} type="button" className="btn btn-danger "> Soul </button>
           <button onClick={e => handleClick("Other")} type="button" className="btn btn-danger "> Other </button>
         </div>
-      
 
       <div className="Music-List">
+        <p></p>
       <ol>
           {musicas.map((m) => 
             <li> {m[0]} - {m[1]}  </li> 
           )}
         </ol>
       </div>
+      {<CustomizedRatings />}
       </header>
 
       <Footer />

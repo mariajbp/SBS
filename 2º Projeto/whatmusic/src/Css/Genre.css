@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-
-.Music {
+.Genre {
     text-align: center;
   }
 
-  .Music-header {
+  .Genre-header {
     background-color: #f2f2f2; 
     min-height: 100vh;
     display: flex;
@@ -16,10 +14,11 @@
     color: #ed6464;
   }
 
-.AutoCompleteBoxes {
-  display: flex;
+  .Logo {
+    height: 30vmin;
+    pointer-events: none;
+  }
 
-}
 
 .Music-List{
   font-size: 15px;
@@ -42,6 +41,7 @@ li:before {
 	color: rgb(43, 43, 43);
 	margin-right: 0.25em;
 }
+
 
 .HeaderText{
   font-family: lobster;

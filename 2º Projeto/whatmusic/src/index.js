@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './Css/index.css';
 import App from './App';
 import Genre from './Genre';
 import Music from './Music';
+import Concerts from './Concerts';
+import Mood from './Mood';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +16,8 @@ ReactDOM.render(
       <Route exact path="/" component={App} />
       <Route path="/genre" component={Genre} />
       <Route path="/music" component={Music} />
+      <Route path="/concerts" component={Concerts} />
+      <Route path="/mood" component={Mood} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

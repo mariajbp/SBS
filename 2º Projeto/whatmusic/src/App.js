@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Link } from "react-router-dom";
 import { ReactComponent as Logo } from './logo.svg';
 import Footer from "./components/Footer";
-import './App.css';
+import './Css/App.css'; 
 
 function App() {
 
@@ -17,8 +17,10 @@ function App() {
           <div className="btn-group">
             <Link to="/genre"><button type="button" className="btn btn-danger btn-lg">Pesquisar por género</button> </Link> {' '}
             <Link to="/music"><button type="button" className="btn btn-danger btn-lg">Pesquisar por música</button> </Link> 
+            <Link to="/concerts"><button type="button" className="btn btn-danger btn-lg">Pesquisar concertos</button> </Link> 
           </div>
-
+          <p></p>
+          <Link to="/mood"><button type="button" className="btn btn-danger btn-lg">Pesquisar por estado de espírito</button> </Link> 
         
       </header>
       <Footer/>
