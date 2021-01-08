@@ -13,19 +13,9 @@ songsClusters = pd.read_csv("Data/Songs_clusters.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
-lyrics = pd.read_csv("Data/lyrics.csv", sep = ",",
+
+lyrics = pd.read_csv("Data/Lyrics.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
-
-
-
-#first = songsNormalized.iloc[0]
-
-def getLyrics(name,artist):
-    l = lyrics.copy()
-    u = l.query(l['artists' == artist] & l['name' == name])['url']
-    print(u)
-
-getLyrics('Toxic', 'Britney Spears')
 
 def suggestSongs(name, artist, numberSongs):
     
@@ -149,12 +139,9 @@ def nearestSongs(name, artist, numberSongs):
         if dif[i] < min:
             min = dif[i]
             cluster = i
-    
-    #('cluster: ', cluster)
-        
+            
     songsSugested = songsClusters.copy()
     songsSugested = songsSugested[songsSugested['Cluster'] == ('cluster_' + str(cluster))]
-    #songsSugested = songsSugested[(songsSugested['artists'] != first['artists']) & (songsSugested['name'] != first['name'])]
     
     songsSugested = songsSugested.drop(columns = 'Cluster')
     
@@ -191,7 +178,12 @@ def nearestSongs(name, artist, numberSongs):
     songs = songs.drop_duplicates(subset = 'artists', keep = 'first')
     #print(songs[['artists', 'name']].head(numberSongs))
     
-    return songs[['artists', 'name']].head(int(numberSongs)).to_json(orient = 'split')
+    songs = getLyrics(songs.head(int(numberSongs)))
+    
+    
+    return songs[['artists', 'name',
+                  'apple_music_player_url', 'header_image_thumbnail_url',
+                  'url']].to_json(orient = 'split')
 
 
 def getArtists():
@@ -215,6 +207,103 @@ def getSongsByArtist(artist):
     
     return list(songs['name'])
 
+'''
+['valence', 'year', 'acousticness', 'danceability',
+ 'duration_ms', 'energy', 'instrumentalness', 'liveness',
+ 'loudness','speechiness', 'tempo']
+'''
+
+def getSongsByMood(mood, numberSongs):
+    
+    numericValues = ['valence', 'year', 'acousticness', 'danceability',
+       'duration_ms', 'energy', 'instrumentalness', 'liveness', 
+       'loudness','speechiness', 'tempo']   
+    
+    if mood == 'happy':
+        m = [1, 0.5, 0.5, 0.75,
+         0.5, 0.75, 0.5, 0.5,
+         0.5, 0.5, 0.5]
+        mDf = pd.DataFrame(columns = numericValues)
+        
+        mDf.loc[-1] = m
+        mDf.index = mDf.index + 1
+        mDf = mDf.sort_index()
+        
+    elif mood == 'cheered':
+        m = [1, 0.5, 0.5, 1,
+           0.5, 1, 0.5, 0.5,
+           0.75, 0.5, 0.5]
+        mDf = pd.DataFrame(columns = numericValues)
+        
+        mDf.loc[-1] = m
+        mDf.index = mDf.index + 1  
+        mDf = mDf.sort_index()
+        
+    elif mood == 'relaxed':
+        m = [0.25, 0.5, 1, 0,
+           0.5, 0, 0.5, 0.5,
+           0.25, 0.5, 0.5]
+        mDf = pd.DataFrame(columns = numericValues)
+        
+        mDf.loc[-1] = m
+        mDf.index = mDf.index + 1  
+        mDf = mDf.sort_index()
+    else:
+        m = [0, 0.5, 0.5, 0.25,
+       0.5, 0, 0.5, 0.5,
+       0.25, 0.5, 0.5]
+        mDf = pd.DataFrame(columns = numericValues)
+
+        mDf.loc[-1] = m
+        mDf.index = mDf.index + 1  
+        mDf = mDf.sort_index()
+
+    print(mDf)
+    
+    songs = songsNormalized.copy()
+    
+    dist = pd.DataFrame()
+    
+    tam = 1000
+        
+    for i in range(tam):
+        dist = dist.append(mDf, ignore_index = True)
+        
+    print ('dist apos append:\n', dist)
+    
+    
+    dist = (pow((songs.head(tam)[numericValues] - dist), 2))
+    dist = dist.sum(axis = 1)
+    dist = dist.apply(np.sqrt)
+    
+    dist = dist[dist != 0]
+    dist = dist.sort_values(ascending = True)
+    
+    listSongs = dist.index
+    
+    songsByMood = pd.DataFrame()
+    for i in range(len(listSongs)):
+        songsByMood = songsByMood.append(songs.iloc[listSongs[i]])
+    
+    print(songsByMood[['artists', 'name']].head(numberSongs))
+    
+    
+def getLyrics(songs):
+    songs = songs.merge(lyrics, how = 'left',
+               left_on = ['name', 'artists'], 
+               right_on = ['name', 'artists'])
+    
+    songs = songs.fillna('')
+    print(songs[['artists', 'name', 'url']])
+    
+    return songs
+
+#def getShows():
+    
+
+
+
+#getSongsByMood('sad')
 
 #suggestSongs(first['name'], first['artists'])
 
@@ -227,6 +316,6 @@ def getSongsByArtist(artist):
 
 #print(nearestSongs('Stressed Out', 'Twenty One Pilots', 10))
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-#nearestSongs("Gucci Gang", 'Lil Pump')
+nearestSongs("Dakiti", 'Bad Bunny', 5)
 
-getSongsByArtist('Pearl Jam')
+#getSongsByArtist('Pearl Jam')
