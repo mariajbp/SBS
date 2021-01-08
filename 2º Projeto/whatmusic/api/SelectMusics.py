@@ -15,7 +15,7 @@ genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 
 lyrics = pd.read_csv("Data/Lyrics.csv", sep = ",",
-                            engine = 'python', encoding = 'utf8')
+                           engine = 'python', encoding = 'utf8')
 
 def suggestSongs(name, artist, numberSongs):
     
@@ -180,6 +180,8 @@ def nearestSongs(name, artist, numberSongs):
     
     songs = getLyrics(songs.head(int(numberSongs)))
     
+    whyRecommend(cluster)
+    
     
     return songs[['artists', 'name',
                   'apple_music_player_url', 'header_image_thumbnail_url',
@@ -232,7 +234,7 @@ def getSongsByMood(mood, numberSongs):
     elif mood == 'cheered':
         m = [1, 0.5, 0.5, 1,
            0.5, 1, 0.5, 0.5,
-           0.75, 0.5, 0.5]
+           0.75, 0.5, 0.75]
         mDf = pd.DataFrame(columns = numericValues)
         
         mDf.loc[-1] = m
@@ -240,16 +242,16 @@ def getSongsByMood(mood, numberSongs):
         mDf = mDf.sort_index()
         
     elif mood == 'relaxed':
-        m = [0.25, 0.5, 1, 0,
+        m = [0.75, 0.5, 1, 0,
            0.5, 0, 0.5, 0.5,
-           0.25, 0.5, 0.5]
+           0.25, 0.5, 0.25]
         mDf = pd.DataFrame(columns = numericValues)
         
         mDf.loc[-1] = m
         mDf.index = mDf.index + 1  
         mDf = mDf.sort_index()
     else:
-        m = [0, 0.5, 0.5, 0.25,
+        m = [0, 0.5, 0.75, 0.25,
        0.5, 0, 0.5, 0.5,
        0.25, 0.5, 0.5]
         mDf = pd.DataFrame(columns = numericValues)
@@ -298,12 +300,37 @@ def getLyrics(songs):
     
     return songs
 
-#def getShows():
+def whyRecommend(cluster):
     
+    centroid = centroids.iloc[cluster]
+        
+    listPrincipalGenres = []
+        
+    for i in range(11, 24):
+        if centroid[i] > 0.5:
+            listPrincipalGenres.append(centroid.index[i])
+        
+    #print(listPrincipalGenres)
+    return listPrincipalGenres
+        
+def whyRecommendMood(mood):
+    
+    if mood == 'happy':
+        return """Músicas com bastante positividade na letra, dançabilidade e 
+        energia alta"""
+    elif mood == 'cheered':
+        return """Músicas com bastante positividade na letra, dançabilidade e energia elevada, 
+        com ritmo elevado"""
+    elif mood == 'relaxed':
+        return """Músicas com positividade na letra, sem dançabilidade, baixa energia, 
+        acústicas e com ritmo lento"""
+    elif mood == 'sad':
+        return """Músicas com negatividade na letra, sem dançabilidade e baixa energia, 
+        com ritmo lento e mais calma"""    
+        
 
 
-
-#getSongsByMood('sad')
+#getSongsByMood('relaxed', 10)
 
 #suggestSongs(first['name'], first['artists'])
 
@@ -316,6 +343,6 @@ def getLyrics(songs):
 
 #print(nearestSongs('Stressed Out', 'Twenty One Pilots', 10))
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-nearestSongs("Dakiti", 'Bad Bunny', 5)
+#nearestSongs("Black", 'Pearl Jam', 5)
 
 #getSongsByArtist('Pearl Jam')
