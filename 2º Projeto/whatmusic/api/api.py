@@ -1,6 +1,6 @@
 import time
 import json
-from SelectMusics import suggestSongsByGenre, suggestSongs, getArtists, getSongsByArtist, nearestSongs
+from SelectMusics import suggestSongsByGenre, suggestSongs, getArtists, getSongsByArtist, nearestSongs, getSongsByMood, whyRecommendMood
 from flask import request
 from flask import Flask
 from flask_cors import CORS
@@ -55,16 +55,22 @@ def postNumberChoices():
     return {'n': option_number}
 
 ############ Mood API ############
-@app.route('/getMood', methods = ['GET', 'POST'])
+@app.route('/handleMood', methods = ['GET', 'POST'])
 def getMoods():
-    #l = 
-    return {'list': 'mood'}
+    mood = request.args.get('mood')
+    print(mood)
+    global chosenMood
+    chosenMood = whyRecommendMood(mood)
+    print(chosenMood)
+    l = getSongsByMood(mood, 10)
+    print(l)
+    return {'list': l}
 
-@app.route('/getMoodSuggestions', methods = ['GET', 'POST'])
-def getMoodSuggestions():
-    #l = 
-    return {'moodList': 'mood'}
-
+@app.route('/moodText', methods = ['GET', 'POST'])
+def getMoodText():
+    m = request.args.get('mood')
+    text = whyRecommendMood(m)
+    return {'mood': text}
 
 ############ Concerts API ############
 @app.route('/getCountries', methods = ['GET', 'POST'])

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .Mood {
     text-align: center;
@@ -33,5 +34,6 @@
 
   .smallerText{
     font-size: 15px;
+    font-family: Bebas Neue;
   }
   

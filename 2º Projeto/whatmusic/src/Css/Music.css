@@ -53,3 +53,17 @@ li:before {
   font-family: lobster;
   font-size: 25px;
 }
+
+.LinkStyle{
+  color: black;
+  padding: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Lobster;
+}
+
+a:link, a:visited, a:hover, a:active { color: rgb(104, 104, 104);
+  text-decoration: none;
+}
+

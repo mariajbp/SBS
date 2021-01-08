@@ -1,4 +1,5 @@
 """
+
 @author: GRUPO_1_MLFA
 """
 
@@ -15,7 +16,7 @@ genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 
 lyrics = pd.read_csv("Data/Lyrics.csv", sep = ",",
-                            engine = 'python', encoding = 'utf8')
+                           engine = 'python', encoding = 'utf8')
 
 def suggestSongs(name, artist, numberSongs):
     
@@ -109,7 +110,7 @@ def suggestSongsByGenre(name, numberSongs):
 
 def nearestSongs(name, artist, numberSongs):
     
-    print(name)
+    #print(name)
     song = songsNormalized.copy()
     songWithName = song.copy()
     song = song[(song['name'] == name) & 
@@ -180,6 +181,8 @@ def nearestSongs(name, artist, numberSongs):
     
     songs = getLyrics(songs.head(int(numberSongs)))
     
+    whyRecommend(cluster)
+    
     
     return songs[['artists', 'name',
                   'apple_music_player_url', 'header_image_thumbnail_url',
@@ -232,7 +235,7 @@ def getSongsByMood(mood, numberSongs):
     elif mood == 'cheered':
         m = [1, 0.5, 0.5, 1,
            0.5, 1, 0.5, 0.5,
-           0.75, 0.5, 0.5]
+           0.75, 0.5, 0.75]
         mDf = pd.DataFrame(columns = numericValues)
         
         mDf.loc[-1] = m
@@ -240,16 +243,16 @@ def getSongsByMood(mood, numberSongs):
         mDf = mDf.sort_index()
         
     elif mood == 'relaxed':
-        m = [0.25, 0.5, 1, 0,
+        m = [0.75, 0.5, 1, 0,
            0.5, 0, 0.5, 0.5,
-           0.25, 0.5, 0.5]
+           0.25, 0.5, 0.25]
         mDf = pd.DataFrame(columns = numericValues)
         
         mDf.loc[-1] = m
         mDf.index = mDf.index + 1  
         mDf = mDf.sort_index()
     else:
-        m = [0, 0.5, 0.5, 0.25,
+        m = [0, 0.5, 0.75, 0.25,
        0.5, 0, 0.5, 0.5,
        0.25, 0.5, 0.5]
         mDf = pd.DataFrame(columns = numericValues)
@@ -258,7 +261,7 @@ def getSongsByMood(mood, numberSongs):
         mDf.index = mDf.index + 1  
         mDf = mDf.sort_index()
 
-    print(mDf)
+    #print(mDf)
     
     songs = songsNormalized.copy()
     
@@ -269,7 +272,7 @@ def getSongsByMood(mood, numberSongs):
     for i in range(tam):
         dist = dist.append(mDf, ignore_index = True)
         
-    print ('dist apos append:\n', dist)
+    #print ('dist apos append:\n', dist)
     
     
     dist = (pow((songs.head(tam)[numericValues] - dist), 2))
@@ -285,7 +288,7 @@ def getSongsByMood(mood, numberSongs):
     for i in range(len(listSongs)):
         songsByMood = songsByMood.append(songs.iloc[listSongs[i]])
     
-    print(songsByMood[['artists', 'name']].head(numberSongs))
+    return (songsByMood[['artists', 'name']].head(numberSongs).head(numberSongs).to_json(orient = 'split'))
     
     
 def getLyrics(songs):
@@ -294,16 +297,40 @@ def getLyrics(songs):
                right_on = ['name', 'artists'])
     
     songs = songs.fillna('')
-    print(songs[['artists', 'name', 'url']])
+    #print(songs[['artists', 'name', 'url']])
     
     return songs
 
-#def getShows():
+def whyRecommend(cluster):
     
+    centroid = centroids.iloc[cluster]
+        
+    listPrincipalGenres = []
+        
+    for i in range(11, 24):
+        if centroid[i] > 0.5:
+            listPrincipalGenres.append(centroid.index[i])
+        
+    return listPrincipalGenres
+        
+def whyRecommendMood(mood):
+    
+    if mood == 'happy':
+        return """Recomendamos-te estas músicas pois apresentam bastante positividade na letra, dançabilidade e 
+        energia alta"""
+    elif mood == 'cheered':
+        return """Recomendamos-te estas músicas pois apresentam bastante positividade na letra, dançabilidade e energia elevada, 
+        com ritmo elevado"""
+    elif mood == 'relaxed':
+        return """Recomendamos-te estas músicas pois apresentam com positividade na letra, sem dançabilidade, baixa energia, 
+        acústicas e com ritmo lento"""
+    elif mood == 'sad':
+        return """Recomendamos-te estas músicas pois têm negatividade na letra, sem dançabilidade e baixa energia, 
+        com ritmo lento e mais calma"""    
+        
 
 
-
-#getSongsByMood('sad')
+#getSongsByMood('relaxed', 10)
 
 #suggestSongs(first['name'], first['artists'])
 
@@ -316,6 +343,6 @@ def getLyrics(songs):
 
 #print(nearestSongs('Stressed Out', 'Twenty One Pilots', 10))
 #nearestSongs('Ironic - 2015 Remaster', "Alanis Morissette")
-nearestSongs("Dakiti", 'Bad Bunny', 5)
+#nearestSongs("Black", 'Pearl Jam', 5)
 
 #getSongsByArtist('Pearl Jam')

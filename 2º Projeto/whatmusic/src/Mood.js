@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Footer from "./components/Footer";
 import { ReactComponent as Logo } from './logo.svg';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import CustomizedRatings from "./components/Rate";
 import axios from 'axios';
 import './Css/Mood.css';
 
 function Mood() {
 
-  const [mood, setMood] = useState(0);
-  useEffect(() => {
-    fetch('/getMoods').then(res => res.json()).then(data => {
-      setMood(data.list);
-    });
-  }, []);
-
   const [songsbyMood, setsongsbyMood] = useState([])
-  const getMood = async function getMood(c) {
-    const params = { mood: c }
-    await axios.get('http://localhost:5000/getMoodSuggestions', { params })
+  const handleClick = async function handleClick(e) {
+    textS(e)
+    const params = { mood: e }
+    await axios.get('http://localhost:5000/handleMood', { params })
       .then(res => {
-        let songsbyMood = res.data.moodList
-        setsongsbyMood(songsbyMood)
+        let songsbyMood = JSON.parse(res.data.list).data
+        setsongsbyMood(songsbyMood);
+      });
+  }
+
+  const [text, setText] = useState([])
+  const textS = async function textS(e) {
+    const params = { mood: e }
+    await axios.get('http://localhost:5000/moodText', { params })
+      .then(res => {
+        let text = res.data.mood
+        setText(text)
       });
   }
 
@@ -30,15 +33,13 @@ function Mood() {
       <header className="Mood-header">
         <Logo className="Logo" />
         <div className="HeaderText"> <p> Como te sentes hoje? </p> </div>
-        <Autocomplete
-          id="combo-box-demo"
-          options={mood}
-          onChange={(event, v) => getMood(v)}
-          style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Conta-nos..." variant="outlined" />}
-        />
-        <div className="AutoCompleteBoxes">
+        <div className="btn-group">
+          <button onClick={e => handleClick("relaxed")} type="button" className="btn btn-danger"> Relaxado </button>
+          <button onClick={e => handleClick("happy")} type="button" className="btn btn-danger ">  Feliz </button>
+          <button onClick={e => handleClick("sad")} type="button" className="btn btn-danger "> Triste </button>
+          <button onClick={e => handleClick("cheered")} type="button" className="btn btn-danger "> Animado </button>
         </div>
+
 
         <div className="Music-List">
           <ol>
@@ -48,7 +49,10 @@ function Mood() {
             )}
           </ol>
         </div>
-        <div className="smallerText"> <p> Em função do teu estado de espírito sugerimos-te as músicas cuja ??? </p> <p> mais se adequa ao ambiente um uma merda qualquer genérica que pareça bem</p> </div>
+
+        <div className="smallerText"> <p> {text} </p> </div>
+        
+        {<CustomizedRatings />}
       </header>
 
       <Footer />

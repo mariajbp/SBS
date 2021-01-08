@@ -6,6 +6,8 @@ import { ReactComponent as Logo } from './logo.svg';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import './Css/Music.css';
+import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 
 function Music() {
@@ -47,6 +49,7 @@ function Music() {
       });
   }
 
+
   return (
     <div className="Music">
       <header className="Music-header">
@@ -82,11 +85,13 @@ function Music() {
           <ol>
             <br></br>
             {suggestedSongs.map((m) =>
-              <li> {m[0]} - {m[1]}  </li>
+
+              <li> {m[0]} - {m[1]}
+                <div className="LinkStyle"> <a href={m[4]} >     lyrics - </a> <a href={m[2]} > play </a> </div>
+              </li>
             )}
           </ol>
         </div>
-        <div className="smallerText"> <p> Com base em wtv estas são as musicas que mais wtvvvv </p> </div>
         {<CustomizedRatings />}
       </header>
       <Footer />
@@ -95,3 +100,4 @@ function Music() {
 }
 
 export default Music;
+
