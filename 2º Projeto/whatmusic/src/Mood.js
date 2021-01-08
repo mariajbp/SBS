@@ -39,19 +39,19 @@ function Mood() {
           <button onClick={e => handleClick("sad")} type="button" className="btn btn-danger "> Triste </button>
           <button onClick={e => handleClick("cheered")} type="button" className="btn btn-danger "> Animado </button>
         </div>
-
+        <br></br>
+        <div className="smallerText"> <p> {text} </p> </div>
 
         <div className="Music-List">
           <ol>
-            <br></br>
             {songsbyMood.map((m) =>
               <li> {m[0]} - {m[1]}  </li>
             )}
           </ol>
         </div>
 
-        <div className="smallerText"> <p> {text} </p> </div>
-        
+
+
         {<CustomizedRatings />}
       </header>
 

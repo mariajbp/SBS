@@ -181,12 +181,11 @@ def nearestSongs(name, artist, numberSongs):
     
     songs = getLyrics(songs.head(int(numberSongs)))
     
-    whyRecommend(cluster)
-    
-    
+    songs['whyrecommend'] = whyRecommend(cluster)
+
     return songs[['artists', 'name',
                   'apple_music_player_url', 'header_image_thumbnail_url',
-                  'url']].to_json(orient = 'split')
+                  'url', 'whyrecommend']].to_json(orient = 'split')
 
 
 def getArtists():
@@ -310,9 +309,15 @@ def whyRecommend(cluster):
     for i in range(11, 24):
         if centroid[i] > 0.5:
             listPrincipalGenres.append(centroid.index[i])
+    
+    string = ', '.join(listPrincipalGenres)
+    
+    return """Recomendamos-te estas músicas, porque encontram-se
+        dentro dos mesmos géneros de músicas que a inserida: {}.
+        \nAchamos que és capaz de gostar!""".format(string) 
         
     #print(listPrincipalGenres)
-    return listPrincipalGenres
+    #return listPrincipalGenres
         
 def whyRecommendMood(mood):
     
@@ -320,10 +325,10 @@ def whyRecommendMood(mood):
         return """Recomendamos-te estas músicas pois apresentam bastante positividade na letra, dançabilidade e 
         energia alta"""
     elif mood == 'cheered':
-        return """Recomendamos-te estas músicas pois apresentam bastante positividade na letra, dançabilidade e energia elevada, 
-        com ritmo elevado"""
+        return """Recomendamos-te estas músicas pois apresentam bastante positividade na letra, dançabilidade, energia elevada e 
+        um ritmo elevado"""
     elif mood == 'relaxed':
-        return """Recomendamos-te estas músicas pois apresentam com positividade na letra, sem dançabilidade, baixa energia, 
+        return """Recomendamos-te estas músicas pois apresentam positividade na letra, contudo não têm dançabilidade, são de baixa energia, 
         acústicas e com ritmo lento"""
     elif mood == 'sad':
         return """Recomendamos-te estas músicas pois têm negatividade na letra, sem dançabilidade e baixa energia, 
