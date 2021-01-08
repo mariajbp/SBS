@@ -13,8 +13,19 @@ songsClusters = pd.read_csv("Data/Songs_clusters.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
 genres = pd.read_csv("Data/genres.csv", sep = ",",
                             engine = 'python', encoding = 'utf8')
+lyrics = pd.read_csv("Data/lyrics.csv", sep = ",",
+                            engine = 'python', encoding = 'utf8')
+
+
 
 #first = songsNormalized.iloc[0]
+
+def getLyrics(name,artist):
+    l = lyrics.copy()
+    u = l.query(l['artists' == artist] & l['name' == name])['url']
+    print(u)
+
+getLyrics('Toxic', 'Britney Spears')
 
 def suggestSongs(name, artist, numberSongs):
     

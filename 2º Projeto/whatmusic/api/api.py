@@ -55,7 +55,25 @@ def postNumberChoices():
     return {'n': option_number}
 
 ############ Mood API ############
+@app.route('/getMood', methods = ['GET', 'POST'])
+def getMoods():
+    #l = 
+    return {'list': 'mood'}
 
+@app.route('/getMoodSuggestions', methods = ['GET', 'POST'])
+def getMoodSuggestions():
+    #l = 
+    return {'moodList': 'mood'}
 
 
 ############ Concerts API ############
+@app.route('/getCountries', methods = ['GET', 'POST'])
+def getCountries():
+    #l = 
+    return {'list': 'country'}
+
+@app.route('/getConcertsFromCountry', methods = ['GET', 'POST'])
+def getConcertCountries():
+    #l = 
+    return {'concertList': 'country'}
+

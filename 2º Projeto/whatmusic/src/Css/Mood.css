@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.Mood {
+    text-align: center;
+  }
+  
+  .Mood-logo {
+    height: 60vmin;
+    pointer-events: none;
+  }
+  
+  
+  .Mood-header {
+    background-color: #f2f2f2; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #ed6464;
+  }
+  
+  .Mood-link {
+    color: #8f2c52;
+  }
+
+
+  .HeaderText{
+    font-family: lobster;
+    font-size: 25px;
+  }
+
+  .smallerText{
+    font-size: 15px;
+  }
+  

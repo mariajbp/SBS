@@ -1,0 +1,30 @@
+.Concerts {
+    text-align: center;
+  }
+  
+  .Concerts-logo {
+    height: 60vmin;
+    pointer-events: none;
+  }
+  
+  
+  .Concerts-header {
+    background-color: #f2f2f2; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #ed6464;
+  }
+  
+  .Concerts-link {
+    color: #8f2c52;
+  }
+
+  .HeaderText{
+    font-family: lobster;
+    font-size: 25px;
+  }
+  

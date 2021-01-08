@@ -86,6 +86,7 @@ function Music() {
             )}
           </ol>
         </div>
+        <div className="smallerText"> <p> Com base em wtv estas são as musicas que mais wtvvvv </p> </div>
         {<CustomizedRatings />}
       </header>
       <Footer />
