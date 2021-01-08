@@ -311,6 +311,7 @@ def whyRecommend(cluster):
         if centroid[i] > 0.5:
             listPrincipalGenres.append(centroid.index[i])
         
+    #print(listPrincipalGenres)
     return listPrincipalGenres
         
 def whyRecommendMood(mood):
