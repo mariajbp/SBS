@@ -217,13 +217,13 @@ def getSongsByArtist(artist):
 
 def getSongsByMood(mood, numberSongs):
     
-    numericValues = ['valence', 'year', 'acousticness', 'danceability',
+    numericValues = ['valence', 'acousticness', 'danceability',
        'duration_ms', 'energy', 'instrumentalness', 'liveness', 
        'loudness','speechiness', 'tempo']   
     
     if mood == 'happy':
-        m = [1, 0.5, 0.5, 0.75,
-         0.5, 0.75, 0.5, 0.5,
+        m = [1, 0.5, 0.75,
+         0.5, 0.5, 0.5, 0.5,
          0.5, 0.5, 0.5]
         mDf = pd.DataFrame(columns = numericValues)
         
@@ -232,9 +232,9 @@ def getSongsByMood(mood, numberSongs):
         mDf = mDf.sort_index()
         
     elif mood == 'cheered':
-        m = [1, 0.5, 0.5, 1,
+        m = [1, 0.5, 1,
            0.5, 1, 0.5, 0.5,
-           0.75, 0.5, 0.75]
+           1, 0, 1]
         mDf = pd.DataFrame(columns = numericValues)
         
         mDf.loc[-1] = m
@@ -242,7 +242,7 @@ def getSongsByMood(mood, numberSongs):
         mDf = mDf.sort_index()
         
     elif mood == 'relaxed':
-        m = [0.75, 0.5, 1, 0,
+        m = [0.75, 1, 0,
            0.5, 0, 0.5, 0.5,
            0.25, 0.5, 0.25]
         mDf = pd.DataFrame(columns = numericValues)
@@ -251,7 +251,7 @@ def getSongsByMood(mood, numberSongs):
         mDf.index = mDf.index + 1  
         mDf = mDf.sort_index()
     else:
-        m = [0, 0.5, 0.75, 0.25,
+        m = [0, 0.75, 0.25,
        0.5, 0, 0.5, 0.5,
        0.25, 0.5, 0.5]
         mDf = pd.DataFrame(columns = numericValues)
