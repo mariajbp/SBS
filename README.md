@@ -7,7 +7,6 @@
 <p align="center">
   <img src="https://github.com/mariajbp/SBS/blob/master/2º%20Projeto/whatmusic/public/logo192.png?raw=true">
 </p>
-<p align="center"> 
-  By [Maria](https://github.com/mariajbp) & [Pedro](https://github.com/PedroFCM) & [Cris](https://github.com/criscmendes) & [Matilde](https://github.com/matilde5silva)
-</p>
+
+By [Maria](https://github.com/mariajbp) & [Pedro](https://github.com/PedroFCM) & [Cris](https://github.com/criscmendes) & [Matilde](https://github.com/matilde5silva)
 
